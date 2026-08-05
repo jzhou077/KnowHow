@@ -1,14 +1,4 @@
 {
-  "$schema": "https://schema.railpack.com",
-  "steps": {
-    "install": {
-      "commands": ["uv add"]
-    },
-    "build": {
-      "inputs": [{ "step": "install" }],
-      "commands": ["...", "./my-custom-build.sh"]
-    }
-  },
   "deploy": {
     "startCommand": "streamlit run UserInterface.py"
   }
