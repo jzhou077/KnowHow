@@ -6,3 +6,4 @@ __pycache__/
 data/
 archive/
 /pyproject.toml
+/uv.lock
