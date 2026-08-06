@@ -1,0 +1,24 @@
+[project]
+name = "company-brain"
+
+requires-python = ">=3.13"
+dependencies = [
+    "aiolimiter>=1.2.1",
+    "fastapi[standard]>=0.141.1",
+    "graphiti-core[anthropic,voyageai]>=0.29.3",
+    "mcp>=2.0.0",
+    "notion-client>=2.2.1",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.0.1",
+]
+
+[project.scripts]
+company-brain = "brain:main"
+
+[build-system]
+requires = ["uv_build>=0.11.31,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = "backend/src"
+module-name = "brain"

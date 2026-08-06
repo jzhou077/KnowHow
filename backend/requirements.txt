@@ -1,7 +1,0 @@
-    aiolimiter>=1.2.1
-    fastapi[standard]>=0.141.1
-    graphiti-core[anthropic,voyageai]>=0.29.3
-    mcp>=2.0.0
-    notion-client>=2.2.1
-    pydantic-settings>=2.14.2
-    python-dotenv>=1.0.1
