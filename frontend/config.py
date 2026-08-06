@@ -13,6 +13,6 @@ class Settings(BaseSettings):
     api_tokens: dict[str, str] = {}
     dev_token: str | None = None
 
-    cors_origins: list[str] = ["http://localhost:5173"]
+    backend_url: str | None = None
 
 settings = Settings()

@@ -64,10 +64,8 @@ NODE_TYPE_ICONS = {
 # API CALLS
 # =============================================
 
-API_URL="http://localhost:8000/api/graph/all"
-
 def get_graph_info():
-    res = requests.get(API_URL, headers={"Authorization": f"Bearer {settings.dev_token}"}, timeout=(5,60))      # 5 seconds to establish connection, 60 for response
+    res = requests.get(f"{settings.backend_url}/api/graph/all", headers={"Authorization": f"Bearer {settings.dev_token}"}, timeout=(5,60))      # 5 seconds to establish connection, 60 for response
     return res.json()
 
 # =============================================
@@ -360,7 +358,7 @@ def render_graph_view(source_id):
         loading_ph.empty()
         st.session_state[loading_key] = True
 
-    graph = get_graph_info()  # <-- BACKEND SWAP POINT: real API call goes here eventually
+    graph = get_graph_info()  
 
     render_graph_legend()
 
@@ -374,7 +372,7 @@ def render_graph_view(source_id):
         st.caption("Drag to explore, scroll to zoom. Click a node to see its details and connections →")
 
         if st.button("Disconnect " + src_meta["name"], key=f"disconnect_{source_id}"):
-            module.disconnect()  # <-- BACKEND SWAP POINT: real token revocation goes here eventually
+            module.disconnect()
             st.session_state["connected_sources"][source_id] = False
             st.session_state.selected_source = None
             st.session_state.selected_node = None
@@ -384,7 +382,7 @@ def render_graph_view(source_id):
     with detail_col:
         node_id = st.session_state.get("selected_node")
         if node_id:
-            detail = module.get_node_detail(node_id)  # <-- BACKEND SWAP POINT
+            detail = module.get_node_detail(node_id)
             if detail:
                 render_node_detail_panel(detail)
         else:
