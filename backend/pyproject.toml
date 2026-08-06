@@ -1,3 +1,6 @@
+[project]
+name = "company-brain"
+
 requires-python = ">=3.13"
 dependencies = [
     "aiolimiter>=1.2.1",
