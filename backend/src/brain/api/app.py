@@ -15,6 +15,7 @@ from starlette.responses import JSONResponse
 from brain.config import settings
 from brain.graph.client import ensure_schema, make_graphiti
 from brain.mcp.server import bind_graph, mcp
+from mcp.server.transport_security import TransportSecuritySettings
 from brain.retrieval import (
     Entity,
     Fact,
@@ -224,4 +225,13 @@ async def api_graph_all(
     )
 
 # MCP endpoint
-app.mount("/", mcp.streamable_http_app())
+app.mount("/", mcp.streamable_http_app(
+    transport_security=TransportSecuritySettings(
+        allowed_hosts=[
+            "backend-production-2b42f.up.railway.app",
+            "127.0.0.1:*",
+            "localhost:*",
+        ],
+        allowed_origins=["https://claude.ai", "https://claude.com"],
+    )
+))
