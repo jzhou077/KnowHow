@@ -74,16 +74,16 @@ def get_graph(req: Request) -> Graphiti:
 Tenant = Annotated[str, Depends(tenant_from_token)]
 Graph = Annotated[Graphiti, Depends(get_graph)]
 
-@app.middleware("http")
-async def guard_mounted_mcp(req: Request, call_next):
-    """Auth for /mcp"""
+# @app.middleware("http")
+# async def guard_mounted_mcp(req: Request, call_next):
+#     """Auth for /mcp"""
 
-    if req.url.path.startswith("/mcp"):
-        header = req.headers.get("authorization", "")
-        token = header.removeprefix("Bearer ").strip()
-        if token not in settings.api_tokens:
-            return JSONResponse({"error": "unauthorized"}, status_code=401)
-    return await call_next(req)
+#     if req.url.path.startswith("/mcp"):
+#         header = req.headers.get("authorization", "")
+#         token = header.removeprefix("Bearer ").strip()
+#         if token not in settings.api_tokens:
+#             return JSONResponse({"error": "unauthorized"}, status_code=401)
+#     return await call_next(req)
 
 # Response shapes
 
