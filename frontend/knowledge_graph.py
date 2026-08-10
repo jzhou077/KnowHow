@@ -33,6 +33,7 @@ def render_graph(graph: dict, height: int = 560):
             label=shorten_text(node["name"]),
             # size=24 if node["type"] in ("project", "document") else 17,
             # color=NODE_COLORS.get(node["type"], "#B8BCC4"),
+            color="#FF7171",
             widthConstraint={"minimum": 45, "maximum": 45},
             heightConstraint={"minimum": 45, "valign": "middle"},
             shape="circle",

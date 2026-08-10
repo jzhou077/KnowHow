@@ -60,6 +60,10 @@ def inject_css():
         div[data-testid="stDecoration"] {{display: none;}}
         div[data-testid="stStatusWidget"] {{display: none;}}
 
+        iframe[title="streamlit_agraph.agraph"] {{
+            background-color: #FFFFFF;
+        }}
+
         .block-container {{
             padding-top: 1.5rem;
             padding-bottom: 2rem;

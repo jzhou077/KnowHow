@@ -25,6 +25,7 @@ import time
 
 import requests
 import streamlit as st
+import streamlit.components.v1 as components
 from config import settings
 from integrations import registry
 from knowledge_graph import render_graph
@@ -360,24 +361,17 @@ def render_graph_view(source_id):
 
     graph = get_graph_info()  
 
-    render_graph_legend()
+    # render_graph_legend()
 
     graph_col, detail_col = st.columns([2.3, 1], gap="large")
 
     with graph_col:
         clicked_node_id = render_graph(graph, height=520)
+        style_agraph_background("#F9F9F9")
         if clicked_node_id:
             st.session_state.selected_node = clicked_node_id
 
         st.caption("Drag to explore, scroll to zoom. Click a node to see its details and connections →")
-
-        if st.button("Disconnect " + src_meta["name"], key=f"disconnect_{source_id}"):
-            module.disconnect()
-            st.session_state["connected_sources"][source_id] = False
-            st.session_state.selected_source = None
-            st.session_state.selected_node = None
-            st.session_state.pop(loading_key, None)
-            st.rerun()
 
     with detail_col:
         node_id = st.session_state.get("selected_node")
@@ -390,6 +384,35 @@ def render_graph_view(source_id):
                 '<div class="detail-field-value">Pick a node above to see its details and connections.</div>'
             )
 
+def style_agraph_background(color="#FFFFFF"):
+    components.html(
+        f"""
+        <script>
+        const COLOR = "{color}";
+        function paint() {{
+            try {{
+                const frames = window.parent.document.querySelectorAll(
+                    'iframe[title="streamlit_agraph.agraph"]'
+                );
+                frames.forEach(frame => {{
+                    const doc = frame.contentDocument;
+                    if (!doc || !doc.head) return;
+                    if (doc.getElementById("agraph-bg")) return;
+                    const style = doc.createElement("style");
+                    style.id = "agraph-bg";
+                    style.textContent =
+                        "body, #root {{ background-color: " + COLOR + " !important; }}";
+                    doc.head.appendChild(style);
+                }});
+            }} catch (e) {{ /* cross-origin — nothing we can do */ }}
+        }}
+        paint();
+        const timer = setInterval(paint, 300);
+        setTimeout(() => clearInterval(timer), 10000);
+        </script>
+        """,
+        height=0,
+    )
 
 # The main content switches between the welcome screen and the graph experience based on whether a source is currently selected.
 
