@@ -37,7 +37,7 @@ async def lifespan(app: FastAPI):
 
     # AsyncExitStacks lets multiple things share one lifespan without nesting `async with`
     async with contextlib.AsyncExitStack() as stack:
-        # await stack.enter_async_context(mcp.session_manager.run())
+        await stack.enter_async_context(mcp.session_manager.run())
 
         graph = make_graphiti()
         await ensure_schema(graph)
