@@ -6,14 +6,36 @@ knowledge_graph.py
 
 from streamlit_agraph import agraph, Node, Edge, Config
 
-# Tuned to be legible on streamlit-agraph's dark canvas. "document" is
-# intentionally NOT near-black here (it would vanish against the dark
-# background) even though it uses INK elsewhere in the app.
 NODE_COLORS = {
-    "project": "#4C9AFF",
-    "document": "#B8BCC4",
-    "person": "#36D399",
-    "topic": "#C084FC",
+    # People — green
+    "person":        "#34D399",
+    "team":          "#059669",
+
+    # Work in flight — blue
+    "project":       "#4C9AFF",
+    "initiative":    "#1D4ED8",
+    "actionitem":    "#93C5FD",
+
+    # Technical things — cyan
+    "system":        "#0E7490",
+    "tool":          "#22D3EE",
+
+    # Rules and how-we-do-it — purple
+    "policy":        "#6D28D9",
+    "process":       "#A78BFA",
+    "requirement":   "#C4B5FD",
+
+    # Points in time — pink
+    "decision":      "#DB2777",
+    "meeting":       "#F9A8D4",
+
+    # Needs attention — warm
+    "risk":          "#EF4444",
+    "openquestion":  "#F59E0B",
+
+    # Supporting reference — neutral
+    "metric":        "#57534E",
+    "term":          "#8A837C",
 }
 
 LABEL_FONT_COLOR = "#1F1E1E"   # light text, readable on the dark canvas
@@ -32,8 +54,8 @@ def render_graph(graph: dict, height: int = 560):
             id=node["uuid"],
             label=shorten_text(node["name"]),
             # size=24 if node["type"] in ("project", "document") else 17,
-            # color=NODE_COLORS.get(node["type"], "#B8BCC4"),
-            color="#FF7171",
+            color=NODE_COLORS.get(node["labels"][0].lower() if len(node["labels"]) > 0 else None, "#B8BCC4"),
+            # color="#FF7171",
             widthConstraint={"minimum": 45, "maximum": 45},
             heightConstraint={"minimum": 45, "valign": "middle"},
             shape="circle",
