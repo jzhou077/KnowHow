@@ -49,10 +49,35 @@ from style import (
 # Node-type -> color, kept in one place so the legend and the graph itself
 
 NODE_TYPE_COLORS = {
-    "project": "#1E7CF2",
-    "document": "#6B7280",
-    "person": "#17B26A",
-    "topic": "#7C3AED",
+    # People — green
+    "person":        "#34D399",
+    "team":          "#059669",
+
+    # Work in flight — blue
+    "project":       "#4C9AFF",
+    "initiative":    "#1D4ED8",
+    "actionitem":    "#93C5FD",
+
+    # Technical things — cyan
+    "system":        "#0E7490",
+    "tool":          "#22D3EE",
+
+    # Rules and how-we-do-it — purple
+    "policy":        "#6D28D9",
+    "process":       "#A78BFA",
+    "requirement":   "#C4B5FD",
+
+    # Points in time — pink
+    "decision":      "#DB2777",
+    "meeting":       "#F9A8D4",
+
+    # Needs attention — warm
+    "risk":          "#EF4444",
+    "openquestion":  "#F59E0B",
+
+    # Supporting reference — neutral
+    "metric":        "#57534E",
+    "term":          "#8A837C",
 }
 NODE_TYPE_ICONS = {
     "project": "📁",
@@ -265,7 +290,7 @@ def render_graph_legend():
         f"""
         <div class="legend-item">
             <span class="legend-dot" style="background:{color};"></span>
-            {NODE_TYPE_ICONS.get(t, '')} {t.title()}
+            {t.title()}
         </div>
         """
         for t, color in NODE_TYPE_COLORS.items()
@@ -368,7 +393,7 @@ def render_graph_view(source_id):
         node_hashmap[node["uuid"]] = node
 
 
-    # render_graph_legend()
+    render_graph_legend()
 
     graph_col, detail_col = st.columns([2.3, 1], gap="large")
 
