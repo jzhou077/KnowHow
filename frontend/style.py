@@ -181,14 +181,7 @@ def inject_css():
             padding: 22px 16px 18px 16px;
             text-align: center;
             transition: all 0.15s ease;
-            cursor: pointer;
             height: 100%;
-        }}
-        .source-card:hover {{
-            border-color: {ACCENT};
-            background: {ACCENT};
-            box-shadow: 0 4px 16px rgba(30, 124, 242, 0.12);
-            transform: translateY(-1px);
         }}
         .source-card svg {{
             width: 26px;
@@ -205,11 +198,6 @@ def inject_css():
             color: {BORDER};
             letter-spacing: 2px;
             font-size: 0.9rem;
-        }}
-        .source-card:hover .name,
-        .source-card:hover .dots,
-        .source-card:hover svg {{
-            color: white !important;
         }}
 
         /* ---------- Buttons ---------- */
