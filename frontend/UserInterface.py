@@ -273,21 +273,23 @@ def render_graph_legend():
     render_html(f'<div class="legend-row">{items}</div>')
 
 
-def render_node_detail_panel(node_detail):
-    color = NODE_TYPE_COLORS.get(node_detail["type"], "#111111")
-    meta = node_detail.get("meta", {})
+def render_node_detail_panel(node):
+    color = NODE_TYPE_COLORS.get(node["labels"][0], "#111111")
 
     render_html(
         f"""
-        <div class="detail-title">{node_detail['label']}</div>
+        <div class="detail-title">{node['name']}</div>
         <div class="detail-type-pill" style="background:{color}22; color:{color};">
-            {node_detail['type'].title()}
+            {node['labels'][0]}
         </div>
         """
     )
 
-    if meta.get("excerpt"):
-        render_html(f'<div class="detail-desc">{meta["excerpt"]}</div>')
+    if node.get("summary"):
+        render_html(f"""
+                    <div style="color: black; font-weight: bold">Summary</div>
+                    <div class="detail-desc">{node["summary"]}</div>
+                    """)
 
     field_rows = "".join(
         f"""
@@ -297,17 +299,17 @@ def render_node_detail_panel(node_detail):
         </div>
         """
         for label, value in [
-            ("Author", meta.get("author")),
-            ("Last Updated", meta.get("last_edited_at")),
-            ("Collection", meta.get("collection")),
-            ("Role", meta.get("role")),
+            ("Author", node.get("author")),
+            ("Last Updated", node.get("last_edited_at")),
+            ("Collection", node.get("collection")),
+            ("Role", node.get("role")),
         ]
         if value
     )
     if field_rows:
         render_html(f'<div class="section-block"><div class="section-heading">Details</div>{field_rows}</div>')
 
-    related = node_detail.get("related", [])
+    related = node.get("related", [])
     if related:
         rel_rows = "".join(
             f"""
@@ -359,7 +361,12 @@ def render_graph_view(source_id):
         loading_ph.empty()
         st.session_state[loading_key] = True
 
-    graph = get_graph_info()  
+    graph = get_graph_info()
+
+    node_hashmap = {}
+    for node in graph["entities"]:
+        node_hashmap[node["uuid"]] = node
+
 
     # render_graph_legend()
 
@@ -376,9 +383,9 @@ def render_graph_view(source_id):
     with detail_col:
         node_id = st.session_state.get("selected_node")
         if node_id:
-            detail = module.get_node_detail(node_id)
-            if detail:
-                render_node_detail_panel(detail)
+            selected_node = node_hashmap.get(node_id)
+            if selected_node:
+                render_node_detail_panel(selected_node)
         else:
             render_html(
                 '<div class="detail-field-value">Pick a node above to see its details and connections.</div>'
