@@ -274,13 +274,13 @@ def render_graph_legend():
 
 
 def render_node_detail_panel(node):
-    color = NODE_TYPE_COLORS.get(node["labels"][0], "#111111")
+    color = NODE_TYPE_COLORS.get(node["labels"][0].lower() if len(node["labels"]) > 0 else None, "#111111")
 
     render_html(
         f"""
         <div class="detail-title">{node['name']}</div>
         <div class="detail-type-pill" style="background:{color}22; color:{color};">
-            {node['labels'][0]}
+            {node['labels'][0] if len(node['labels']) > 0 else "N/A"}
         </div>
         """
     )
