@@ -99,7 +99,7 @@ def get_graph_info():
 # =============================================
 
 st.set_page_config(
-    page_title="KnowHow / Knowledge Base",
+    page_title="KnowHow",
     page_icon="🗂️",
     layout="wide",
 )
@@ -120,20 +120,20 @@ top_left, top_mid, top_right = st.columns([1.4, 3, 1.3], vertical_alignment="cen
 with top_left:
     render_html(f'<div class="brand">{icon(ICON_LOGO, 26)} KnowHow</div>')
 
-with top_mid:
-    search_col1, search_col2 = st.columns([0.06, 0.94])
-    with search_col1:
-        render_html(f'<div style="padding-top:9px;color:#9CA3AF;">{icon(ICON_SEARCH, 18)}</div>')
-    with search_col2:
-        st.text_input(
-            "Search Knowledge",
-            placeholder="Search Knowledge",
-            label_visibility="collapsed",
-            key="search_knowledge",
-        )
+# with top_mid:
+#     search_col1, search_col2 = st.columns([0.06, 0.94])
+#     with search_col1:
+#         render_html(f'<div style="padding-top:9px;color:#9CA3AF;">{icon(ICON_SEARCH, 18)}</div>')
+#     with search_col2:
+#         st.text_input(
+#             "Search Knowledge",
+#             placeholder="Search Knowledge",
+#             label_visibility="collapsed",
+#             key="search_knowledge",
+#         )
 
-with top_right:
-    st.button("＋ Connect Source", type="primary", use_container_width=True, key="connect_source_top")
+# with top_right:
+#     st.button("＋ Connect Source", type="primary", use_container_width=True, key="connect_source_top")
 
 render_html("<div style='border-bottom:1px solid #E4E4E7; margin: 8px 0 6px 0;'></div>")
 
@@ -246,7 +246,7 @@ def render_source_card(source):
                 st.rerun()
         else:
             if st.button("Connect", key=f"card_{source['id']}", use_container_width=True):
-                st.toast(f"{source['name']} isn't wired up to a backend yet — coming soon.")
+                st.toast(f"{source['name']} integration is coming soon! For now, check out Notion!")
 
 
 # The home screen presents the welcome hero and the source cards that users can connect from a single place.
@@ -278,8 +278,8 @@ def render_home_screen():
 
     render_html('<div class="connect-all-wrap">')
     btn_col1, btn_col2, btn_col3 = st.columns([1.3, 1, 1.3])
-    with btn_col2:
-        st.button("＋ Connect All Sources", type="primary", use_container_width=True, key="connect_all")
+    # with btn_col2:
+    #     st.button("＋ Connect All Sources", type="primary", use_container_width=True, key="connect_all")
     render_html("</div>")
 
 
